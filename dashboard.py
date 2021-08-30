@@ -95,7 +95,7 @@ def main():
     #--------------------------------------------------------------------------
     
     # Chargement du logo à placer dans l'onglet de la page
-    logo_AP = Image.open(path+'\\logo_AP.png')       
+    logo_AP = Image.open(path+'logo_AP.PNG')       
     
     st.set_page_config(
          # permet à l'app web de prendre tout l'écran
