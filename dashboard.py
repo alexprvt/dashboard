@@ -167,7 +167,7 @@ def main():
                 "Seuil d'acceptabilité",
                 min_value=1,
                 max_value=99,
-                value=50,
+                value=31,
                 step=1,
                 help="Probabilité maximale du risque de défaut de paiement \
                 acceptable pour accorder le prêt"
