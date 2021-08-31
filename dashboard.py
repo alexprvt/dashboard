@@ -156,11 +156,23 @@ def main():
         #Jauge de probabilité de difficulté de paiement
         left_col.plotly_chart(fig, use_container_width=True)
         
+        seuil=31
+        
+        if default_proba <= seuil:
+            decision = "Crédit accordé"
+            emoji = "white_check_mark"
+            
+        else:
+            decision = "Crédit refusé"
+            emoji = "no_entry_sign"
+          
+        right_col.header(f"***Décision:*** {decision} :{emoji}:")
+        
         right_col.write("_Lorsque la probabilité qu'il y ait un défaut de paiement \
                  dépasse 31%, l'algorithme prédit que le prêt ne doit pas être\
-                 accordé. Ce seuil a éé déterminer afin de maximiser le profit\
+                 accordé. Ce seuil a été déterminé afin de maximiser le profit\
                  moyen par demandeur de crédit. Après application de ce \
-                 seuil, 63% des prêts ont été correctement classifiés._")
+                 seuil, 65% des prêts testés ont été correctement classifiés._")
         
         #Permet le choix du seuil de probabilité de défaut admissible
         seuil = right_col.slider(
@@ -173,31 +185,17 @@ def main():
                 acceptable pour accorder le prêt"
                 )
         
-        if default_proba <= seuil:
-            decision = "Crédit accordé"
-            emoji = "white_check_mark"
-            
-        else:
-            decision = "Crédit refusé"
-            emoji = "no_entry_sign"
-          
-        right_col.header(f"***Décision:*** {decision} :{emoji}:")
-        
-        expander = right_col.beta_expander("En réalité, le client a-t-il eu du mal \
-                                    à rembourser son prêt ?")
-        
-        # Bandeau de vérification de la prédiction
-        reality = get_target(select_id)[0]
-        if reality == "Crédit refusé":
-            expander.write("Le client a eu des difficultés à rembourser ce \
-                           prêt :no_entry_sign: ")
-        else:
-            expander.write("Le client n'a pas eu de difficultés à rembourser ce \
-                           prêt :white_check_mark: ")
-        if reality != decision:
-            expander.write("La prédiction du modèle n'est donc pas correcte")
-        else :
-            expander.write("La prédiction du modèle est donc correcte")
+        expander = right_col.beta_expander("En savoir plus sur la méthode de prédiction")
+        expander.write("La prédiction de probabilité de défaut de paiement est réalisée \
+                       à l'aide d'un modèle d'intelligence artificielle.\
+                       Cet algorithme est entraîné sur les données de Home Credit.\
+                       Ces donnnées sont constituées d'environ 300 000 demandes de prêt, \
+                       pour lesquelles plusieurs centaines de caractéristiques \
+                       relatives au client sont renseignées.\
+                       Ce modèle, appelé Extreme Gradient Boosting, consiste\
+                       à créer des arbres de décision aléatoires, puis à les\
+                       améliorer étape par étape jusqu'à converger vers une \
+                       précision de classification maximale.")
         
         
         st.header('__Interprétabilité de la prédiction de défaut de paiement__')
@@ -225,9 +223,9 @@ def main():
                         sur la prédiction de probabilité de difficulté de\
                         paiement. En partant du bas du graphique:_")
         wat_exp.write("_- Au départ on se situe à 50, ce qui correspond à \
-                        la probabilit de base de 50%._")
+                        une probabilité de défaut de paiement de base de 50%._")
         wat_exp.write("_- Chaque barre correspond à l'influence d'une\
-                        variable sur la capcité de remboursement du client.\
+                        variable sur la capacité de remboursement du client.\
                         Si la barre est rouge, cela veut dire que \
                         la valeur de la variable est en sa \
                         défaveur. Si la barre est verte, cela veut dire que la\
@@ -272,9 +270,11 @@ def main():
                                          graphique")
         graph_exp.write("_Le client appartient à la classe correspondant à la barre colorée en violet.\
                         La hauteur d'une barrre est égale\
-                        au taux moyen de défaut de paiement des individus appartenant à cette classe.\
-                        Cela permet de comprendre pourquoi pourquoi le modèle attribue un impact positif, ou \
-                        négatif à cette variable_")
+                        au pourcentage moyen de défaut de paiement des individus appartenant à cette classe.\
+                        Ces statistiques descriptives ne sont pas directement utilisées par le modèle.\
+                        L'affichage de ce graphique permet uniquement d'appuyer les raisons pour \
+                        lesquelles le modèle attribue à cette variable un impact positif, ou \
+                        négatif, sur la capacité de remboursment du client._")
        
         
         
@@ -285,11 +285,11 @@ def main():
     if radio == 'Informations relatives au client':
         st.header("__Affichage de quelques informations relatives au client__")
         st.subheader("Voici quelques statistiques.\
-                     Pour chaque variable, il est possible d'afficher le __taux \
+                     Pour chaque variable, il est possible d'afficher le __pourcentage \
                      de difficulté de paiement par groupe__, ainsi que __la distribution\
                       d'individus par groupe__ ")
         st.write('Sur chaque graphique, le client sera représenté en violet, \
-                 et la moyenne du taux global de défaut de paiement en orange')
+                 et la moyenne du pourcentage global de défaut de paiement en pointillés orange')
         
         variables = load_data().columns
         
@@ -354,9 +354,9 @@ def main():
     #--------------------------------------------------------------------------
     
     if radio == 'Modification des paramètres':
-        st.header("__Et si on modifiait a valeur de quelques variables ?__")
-        st.subheader('Il est possible de mofifier certaines variables relatives au client sélectionné.\
-                 Nous pourrons ainsi visualiser une nouvelle prédiction personalisée')
+        st.header("__Et si on modifiait les valeurs de quelques variables ?__")
+        st.subheader('Il est possible de mofifier certaines variables relatives au client du prêt sélectionné.\
+                 Nous pourrons ainsi visualiser une nouvelle prédiction tenant compte de ces nouveau paramètres.')
         variables = load_data_full().columns
         var_list = ['Sexe', 'Jours travaillés', 'Ratio Revenu/Montant du prêt',
                     "Type d'éducation"]
