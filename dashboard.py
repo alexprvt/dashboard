@@ -143,8 +143,6 @@ def main():
     #--------------------------------------------------------------------------
     
     if radio == 'Capacité de remboursement':
-        st.header("__Prédiction de capacité à rembourser le prêt__")
-        
         
         #Calcul de la probabilité de difficulté de paiement
         default_proba = int(100*(1-get_score(select_id)))
@@ -152,6 +150,9 @@ def main():
         
         #Séparation de l'espace en deux colonnes
         left_col, right_col = st.beta_columns(2)
+        
+        #Titre 
+        left_col.header(f"__Prédiction sur le prêt {select_id}__")
         
         #Jauge de probabilité de difficulté de paiement
         left_col.plotly_chart(fig, use_container_width=True)
@@ -234,6 +235,9 @@ def main():
         wat_exp.write("_- En haut du graphique, la barre s'arrête au niveau de\
                          la probabilté de difficulté de paiement totale du \
                          client._")
+        
+        #Satistiques
+        st.header('Statistiques: % de défaut de paiement moyen par classe')
         
         #Choix de la variable à afficher dans le graphique
         VARS = plotly_waterfall(select_id, shap_series, n_feats=n_feats)[1] 

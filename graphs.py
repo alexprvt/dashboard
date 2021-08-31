@@ -69,7 +69,7 @@ def plotly_waterfall(sk_id, shap_series, n_feats=10, shap_modif=np.array([])):
         decreasing = {"marker":{"color":"green", "line":{"color":"#2B9B00", "width":2}}},
     ))
 
-    fig.update_layout(title = "Influence de chaque varibale sur la prédiction de difficulté de paiement", waterfallgap = 0.2)
+    fig.update_layout(title = "Influence de chaque variable sur la probabilité de défaut de paiement", waterfallgap = 0.2)
     fig.update_layout(height=int(n_feats*50))
     fig.update_yaxes(tickangle=-30)
     VARS = ticks[1:]
