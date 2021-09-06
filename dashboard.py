@@ -184,7 +184,7 @@ def main():
             decision = "Crédit refusé"
             emoji = "no_entry_sign"
         
-        right_col.write("{decision} :{emoji}:")
+        right_col.write(f"{decision} :{emoji}:")
         
         expander = right_col.beta_expander("En savoir plus sur la méthode de prédiction")
         expander.write("La prédiction de probabilité de défaut de paiement est réalisée \
