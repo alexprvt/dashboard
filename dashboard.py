@@ -156,18 +156,8 @@ def main():
         
         #Jauge de probabilité de difficulté de paiement
         left_col.plotly_chart(fig, use_container_width=True)
-        
-        seuil=31
-        
-        if default_proba <= seuil:
-            decision = "Crédit accordé"
-            emoji = "white_check_mark"
-            
-        else:
-            decision = "Crédit refusé"
-            emoji = "no_entry_sign"
           
-        right_col.header(f"***Décision:*** {decision} :{emoji}:")
+        right_col.header(f"***Décision:***")
         
         right_col.write("_Lorsque la probabilité qu'il y ait un défaut de paiement \
                  dépasse 31%, l'algorithme prédit que le prêt ne doit pas être\
@@ -185,6 +175,16 @@ def main():
                 help="Probabilité maximale du risque de défaut de paiement \
                 acceptable pour accorder le prêt"
                 )
+        
+        if default_proba <= seuil:
+            decision = "Crédit accordé"
+            emoji = "white_check_mark"
+            
+        else:
+            decision = "Crédit refusé"
+            emoji = "no_entry_sign"
+        
+        right_col.write("{decision} :{emoji}:")
         
         expander = right_col.beta_expander("En savoir plus sur la méthode de prédiction")
         expander.write("La prédiction de probabilité de défaut de paiement est réalisée \
@@ -301,7 +301,7 @@ def main():
         var_list = var_list = ['Sexe', 'Jours travaillés', 'Ratio Revenu/Montant du prêt',
                     "Type d'éducation"]
         
-        chosen_vars = st.multiselect('Choix des variables à modifier',
+        chosen_vars = st.multiselect('Choix des variables à afficher',
                                      variables,
                                      var_list)
         
