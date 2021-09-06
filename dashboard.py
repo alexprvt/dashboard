@@ -21,8 +21,6 @@ path = ''
 # path = 'C:\\Users\\Alexandre\\Desktop\\Dashboard\\'
 #  streamlit run C:/Users/Alexandre/Desktop/Dashboard_Test/dashboard_test.py
 
-
-
 def main():
     
     #--------------------------------------------------------------------------
@@ -359,7 +357,7 @@ def main():
     
     if radio == 'Modification des paramètres':
         st.header("__Et si on modifiait les valeurs de quelques variables ?__")
-        st.subheader('Il est possible de mofifier certaines variables relatives au client du prêt sélectionné.\
+        st.subheader('Il est possible de modifier certaines variables relatives au client du prêt sélectionné.\
                  Nous pourrons ainsi visualiser une nouvelle prédiction tenant compte de ces nouveau paramètres.')
         variables = load_data_full().columns
         var_list = ['Sexe', 'Jours travaillés', 'Ratio Revenu/Montant du prêt',
